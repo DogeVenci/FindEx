@@ -1,0 +1,85 @@
+<html>
+<head>
+	<!--<link rel="stylesheet" type="text/css" href="./css3-gaussian-blur.css" />
+	-->
+	<script type="text/javascript" src="./jquery-1.10.2.min.js"></script>
+
+</head>
+<body>
+	<style type="text/css">
+	#headerimage
+	{
+		background: url('http://acidmartin.files.wordpress.com/2008/10/winter-road.jpg') no-repeat;
+		height: 200px;
+	}
+	</style>
+
+	<div id="headerimage"></div>
+
+	<div>
+		1234
+		<a href="/">12334</a>
+	</div>
+
+	<style type="text/css">#p1,#p2{color:#ffffff;}</style>
+  	<script type="text/javascript">
+  		var a=$('<div id="div2" style="width:300;height:300;display:none">这是tip</div>');
+  		$('body').append(a);
+  		function getData(){
+  			$.ajax({
+				type: "get",
+				url: "http://btdigg.org/search?info_hash=&q=HAZ-003",
+				beforeSend: function(XMLHttpRequest){
+					//ShowLoading();
+				},
+				success: function(data, textStatus){
+
+				},
+				complete: function(XMLHttpRequest, textStatus){
+					//HideLoading();
+				},
+				error: function(){
+					//请求出错处理
+				}
+			});
+  		}
+  		function showDlg(){
+  			$("#div2").css('left',event.clientX+10); 
+  			$("#div2").css('top',event.clientY+5); 
+  			$("#div2").css('position',"absolute"); 
+  			$("#div2").fadeIn(600);
+  			getData();
+
+  		};
+  		function hideDlg(){
+  			$("#div2").fadeOut(600);
+  		};
+  	</script>
+	<p id="p1" onclick="showDlg()" >p1</p>
+	<p id="p2" onmousemove="showDlg()" onmouseout="hideDlg()">p2</p>
+
+	<style type="text/css">[id]{color: #ff0000 !important;}</style>
+
+	<script type="text/javascript">
+
+	$.fn.getBackgroundColor = function() {
+     var rgb = $(this).css('color');
+     if(rgb >= 0) return rgb;//如果是一个hex值则直接返回
+    else{
+         rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+         function hex(x) {return ("0" + parseInt(x).toString(16)).slice(-2);}
+         rgb= "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+     }
+     return rgb;
+ }
+
+	$.each($("div"),function(){
+		color=$(this).css('background');
+		alert(color.search(/.*?\.jpg/));
+	});
+	</script>
+
+
+
+</body>
+</html>
