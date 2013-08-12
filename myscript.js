@@ -80,6 +80,7 @@ chrome.runtime.onMessage.addListener(
         farewell: request.greeting
       });
       var b = $(request.greeting);
+      $('#div2 img').remove();
       $('#div2').append(b);
     }
 

@@ -1,4 +1,5 @@
 var isUrlAvailable=false;
+var lastTab;
 var a=$('<div id="div2" style="width:300;height:300;display:none">这是tip</div>');
 $('body').append(a);
 function showDlg(){
@@ -26,25 +27,27 @@ chrome.contextMenus.create({
     //checkurl("http://www.163.com");
     //$("a[href]").attr('href','http://www.geeku.org');
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      lastTab=tabs[0].id;
       chrome.tabs.sendMessage(tabs[0].id, {greeting: "1"}, function(response) {
         
       });
     });
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://btdigg.org/search?info_hash=&q="+info.selectionText, true);
+    xhr.open("GET", "https://btdigg.org/search?info_hash=&q="+info.selectionText, true);
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4) {
         // JSON解析器不会执行攻击者设计的脚本.
           var t=xhr.responseText;
-          $(t).find("#search_res").each(function(){
-            var text=$(this).html();
-            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-              chrome.tabs.sendMessage(tabs[0].id, {greeting: text}, function(response) {
-                console.log(response.farewell);
+          //$(t).find("#search_res tbody").each(function(){
+            //var text=$(this).html();
+            var text=$(t).find("#search_res>table>tbody").html();
+            //chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+              chrome.tabs.sendMessage(lastTab, {greeting: text}, function(response) {
+                console.log("SendMsg response text OK!!!");
               });
-            });
-          });
+            //});
+         // });
       }
     }
     xhr.send();
