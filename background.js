@@ -1,17 +1,5 @@
-var isUrlAvailable=false;
+
 var lastTab;
-var a=$('<div id="div2" style="width:300;height:300;display:none">这是tip</div>');
-$('body').append(a);
-function showDlg(){
-  $("#div2").css('left',event.clientX+10); 
-  $("#div2").css('top',event.clientY+5); 
-  $("#div2").css('position',"absolute"); 
-  $("#div2").fadeIn(600);
-};
-function hideDlg(){
-  $("#div2").fadeOut(600);
-  $("#div2").empty();
-};
 
 chrome.browserAction.onClicked.addListener(function(tab) {
   //chrome.tabs.executeScript(null,{code:"document.body.bgColor='red'"});
@@ -20,15 +8,15 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 chrome.contextMenus.create({
   "type": "normal",
-  "title": "'%s'",
-  "contexts": ["all"],
+  "title": "FindEx '%s'",
+  "contexts": ["selection"],
   "onclick": function(info, tab) {
     //alert(info.selectionText);
     //checkurl("http://www.163.com");
     //$("a[href]").attr('href','http://www.geeku.org');
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       lastTab=tabs[0].id;
-      chrome.tabs.sendMessage(tabs[0].id, {greeting: "1"}, function(response) {
+      chrome.tabs.sendMessage(tabs[0].id, {greeting: "open"}, function(response) {
         
       });
     });
@@ -54,3 +42,10 @@ chrome.contextMenus.create({
     
   }
 }, function() {});
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+      "from a content script:" + sender.tab.url :
+      "from the extension");
+});
