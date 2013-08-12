@@ -1,6 +1,6 @@
-var loader=chrome.extension.getURL("images/ajax-loader.gif");
+ var loader=chrome.extension.getURL("images/ajax-loader.gif");
 var loadimg=$('<img src='+loader+'>');
-var a = $('<div id="div2" style="background-color:#E8E9E6;border:1px solid #ccc;margin-top: 10px;padding: 5px 15px;overflow:auto;display:none"></div>');
+var a = $('<div id="div2" style="background-color:#E8E9E6;border:1px solid #ccc;margin-top: 10px;padding: 0.5% 0.6%;overflow:auto;display:none"></div>');
 $('body').append(a);
 var x;
 var y;
@@ -47,6 +47,7 @@ function showDlg() {
   $("#div2").css('width',"700px");
   $("#div2").css('position', "absolute");
   $("#div2").css('text-align',"center");
+  $("#div2").css('overflow',"auto");
   $("#div2").css('line-height',"300px");
   $("#div2").append(loadimg);
   $("#div2").fadeIn(600);
@@ -55,23 +56,37 @@ function showDlg() {
 
 };
 
-function showSearch(){
-  $("#div2").empty();
-  $("#div2").css('left', "35%");
-  $("#div2").css('top', "50%");
-  $("#div2").css('height',"50px");
-  $("#div2").css('width',"30%");
-  $("#div2").css('position', "absolute");
-  var search=$('<input type="text">');
-  $("#div2").append(search);
-  $("#div2").fadeIn(600);
-  $("#div2").css('z-index',"99999");
-};
-
 function hideDlg() {
   $("#div2").fadeOut(600);
   $("#div2").empty();
 };
+
+function showSearch(){
+  $("#div2").empty();
+  $("#div2").css('left', "35%");
+  $("#div2").css('top', $(window).height()/2);
+  $("#div2").css('height',"25px");
+  $("#div2").css('width',"30%");
+  $("#div2").css('position', "fixed");
+  $("#div2").css('overflow',"");
+  var search=$('<input type="text" style="width:100%;height:90%" >');
+  $("#div2").append(search);
+  $("#div2").fadeIn(600);
+  $("#div2").css('z-index',"99999");
+  $("#div2 input")[0].focus();
+  $("#div2 input").bind('keydown', function (e){
+    if(e.keyCode==13){
+      var val=$("#div2 input").val();
+      chrome.runtime.sendMessage("", {greeting: val}, function(response) {
+                console.log("SendMsg response text OK!!!");
+       });
+      hideDlg();
+      
+    }
+  });
+};
+
+
 
 $(document).click(function(){
    if ($(event.srcElement).is("#div2,#div2 *")) { 
@@ -82,23 +97,12 @@ $(document).click(function(){
     } 
 });
 
-var presskey;
-$(document).keydown(function(e){
-  if (e.which==65) {
-      presskey=true;
-  }
-  else if (e.which==86) {
-    if (presskey){
+
+$(document).keyup(function(e){
+  if (e.which==86) {
+    
        //alert("123");
        showSearch();
-       chrome.runtime.sendMessage("", {greeting: "123"}, function(response) {
-                console.log("SendMsg response text OK!!!");
-       });
-      }
-      presskey=false;
-  }
-  else{
-      presskey=false;
   }
 });
 chrome.runtime.onMessage.addListener(
