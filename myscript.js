@@ -1,6 +1,6 @@
- var loader=chrome.extension.getURL("images/ajax-loader.gif");
+var loader=chrome.extension.getURL("images/ajax-loader.gif");
 var loadimg=$('<img src='+loader+'>');
-var a = $('<div id="div2" style="background-color:#E8E9E6;border:1px solid #ccc;margin-top: 10px;padding: 0.5% 0.6%;overflow:auto;display:none"></div>');
+var a = $('<div id="divFloat" style="background-color:#E8E9E6;border:1px solid #ccc;margin-top: 10px;padding: 0.5% 0.6%;overflow:auto;display:none"></div>');
 $('body').append(a);
 var x;
 var y;
@@ -41,46 +41,47 @@ function getData() {
 }
 
 function showDlg() {
-  $("#div2").css('left', x);
-  $("#div2").css('top', y);
-  $("#div2").css('height',"300px");
-  $("#div2").css('width',"700px");
-  $("#div2").css('position', "absolute");
-  $("#div2").css('text-align',"center");
-  $("#div2").css('overflow',"auto");
-  $("#div2").css('line-height',"300px");
-  $("#div2").append(loadimg);
-  $("#div2").fadeIn(600);
-  $("#div2").css('z-index',"99999");
+  $("#divFloat").css('left', x);
+  $("#divFloat").css('top', y);
+  $("#divFloat").css('height',"300px");
+  $("#divFloat").css('width',"700px");
+  $("#divFloat").css('position', "absolute");
+  $("#divFloat").css('text-align',"center");
+  $("#divFloat").css('overflow',"auto");
+  $("#divFloat").css('line-height',"300px");
+  $("#divFloat").append(loadimg);
+  $("#divFloat").fadeIn(600);
+  $("#divFloat").css('z-index',"99999");
   //getData();
 
 };
 
 function hideDlg() {
-  $("#div2").fadeOut(600);
-  $("#div2").empty();
+  $("#divFloat").empty();
+  $("#divFloat").fadeOut(600);
 };
 
 function showSearch(){
-  $("#div2").empty();
-  $("#div2").css('left', "35%");
-  $("#div2").css('top', $(window).height()/2);
-  $("#div2").css('height',"25px");
-  $("#div2").css('width',"30%");
-  $("#div2").css('position', "fixed");
-  $("#div2").css('overflow',"");
+  $("#divFloat").empty();
+  $("#divFloat").css('left', "35%");
+  $("#divFloat").css('top', $(window).height()/2);
+  $("#divFloat").css('height',"25px");
+  $("#divFloat").css('width',"30%");
+  $("#divFloat").css('position', "fixed");
+  $("#divFloat").css('overflow',"");
   var search=$('<input type="text" style="width:100%;height:90%" >');
-  $("#div2").append(search);
-  $("#div2").fadeIn(600);
-  $("#div2").css('z-index',"99999");
-  $("#div2 input")[0].focus();
-  $("#div2 input").bind('keydown', function (e){
+  $("#divFloat").append(search);
+  $("#divFloat").fadeIn(600);
+  $("#divFloat").css('z-index',"99999");
+  $("#divFloat input")[0].focus();
+  $("#divFloat input").bind('keydown', function (e){
     if(e.keyCode==13){
-      var val=$("#div2 input").val();
+      var val=$("#divFloat input").val();
+      //hideDlg();
+      $("#divFloat").empty();
       chrome.runtime.sendMessage("", {greeting: val}, function(response) {
                 console.log("SendMsg response text OK!!!");
        });
-      hideDlg();
       
     }
   });
@@ -89,7 +90,7 @@ function showSearch(){
 
 
 $(document).click(function(){
-   if ($(event.srcElement).is("#div2,#div2 *")) { 
+   if ($(event.srcElement).is("#divFloat,#divFloat *")) { 
      // alert('内部区域'); 
       } else {
       //alert('你的点击不在目标区域');
@@ -100,11 +101,13 @@ $(document).click(function(){
 
 $(document).keyup(function(e){
   if (e.which==86) {
-    
-       //alert("123");
        showSearch();
   }
+  else if (e.which==27) {
+     hideDlg();
+  }
 });
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log(sender.tab ?
@@ -117,9 +120,9 @@ chrome.runtime.onMessage.addListener(
         farewell: request.greeting
       });
       var b = $(request.greeting);
-      $('#div2 img').remove();
-      $("#div2").css('text-align',"");
-      $("#div2").css('line-height',"");
-      $('#div2').append(b);
+      $('#divFloat img').remove();
+      $("#divFloat").css('text-align',"");
+      $("#divFloat").css('line-height',"");
+      $('#divFloat').append(b);
     }
 });
