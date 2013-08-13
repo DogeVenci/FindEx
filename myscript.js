@@ -45,7 +45,7 @@ function showDlg() {
   $("#divFloat").css('top', y);
   $("#divFloat").css('height',"300px");
   $("#divFloat").css('width',"700px");
-  $("#divFloat").css('position', "absolute");
+  $("#divFloat").css('position', "fixed");
   $("#divFloat").css('text-align',"center");
   $("#divFloat").css('overflow',"auto");
   $("#divFloat").css('line-height',"300px");
