@@ -100,7 +100,7 @@ $(document).click(function(){
 
 
 $(document).keyup(function(e){
-  if (e.which==86) {
+  if (e.which==86&&!($("input,textarea").is(":focus"))) {
        showSearch();
   }
   else if (e.which==27) {
