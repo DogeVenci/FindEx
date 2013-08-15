@@ -7,14 +7,14 @@ var y;
 
 document.onmouseup = function(e) {
   if (e.button==2) {
-    x = e.pageX;
-    y = e.pageY;
+    x = e.clientX;
+    y = e.clientY;
     var test=$(window).width();
     if (x>($(window).width()-750)) {
       x=$(window).width()-750;
     }
-    if (y>($(document).height()-350)) {
-      y=$(document).height()-350;
+    if (y>($(window).height()-350)) {
+      y=$(window).height()-350;
     }
   }
   
