@@ -41,19 +41,10 @@ function getData() {
 }
 
 function showDlg() {
-  $("#divFloat").css('left', x);
-  $("#divFloat").css('top', y);
-  $("#divFloat").css('height',"300px");
-  $("#divFloat").css('width',"700px");
-  $("#divFloat").css('position', "fixed");
-  $("#divFloat").css('text-align',"center");
-  $("#divFloat").css('overflow',"auto");
-  $("#divFloat").css('line-height',"300px");
+  $("#divFloat").css({"left":x,"top":y,"height":"300px","width":"700px","position":"fixed","text-align":"center","overflow":"auto","line-height":"300px","font-size":"12px"});
   $("#divFloat").append(loadimg);
   $("#divFloat").fadeIn(600);
   $("#divFloat").css('z-index',"99999");
-  //getData();
-
 };
 
 function hideDlg() {
@@ -63,12 +54,8 @@ function hideDlg() {
 
 function showSearch(){
   $("#divFloat").empty();
-  $("#divFloat").css('left', "35%");
-  $("#divFloat").css('top', $(window).height()/2);
-  $("#divFloat").css('height',"25px");
-  $("#divFloat").css('width',"30%");
-  $("#divFloat").css('position', "fixed");
-  $("#divFloat").css('overflow',"");
+
+  $("#divFloat").css({"left":"35%","top":$(window).height()/2,"height":"25px","width":"30%","position":"fixed","overflow":""});
   var search=$('<input type="text" style="width:100%;height:90%" >');
   $("#divFloat").append(search);
   $("#divFloat").fadeIn(600);
@@ -121,8 +108,14 @@ chrome.runtime.onMessage.addListener(
       });
       var b = $(request.greeting);
       $('#divFloat img').remove();
-      $("#divFloat").css('text-align',"");
-      $("#divFloat").css('line-height',"");
+      $("#divFloat").css({"text-align":"","line-height":""});
       $('#divFloat').append(b);
+
+      $("#divFloat a:link").css("color","#0038da");
+      $("#divFloat li").css({"float":"left","width":"auto","list-style":"none","margin-right":"25px"});
+      $("#divFloat .T1").css("padding-top","20px");
+      $("#divFloat .BotInfo").css("font-size","small!important");
+      var _href=$("#divFloat .T1 a").attr("href");
+      $("#divFloat .T1 a").attr("href","https://www.google.com.hk/search?q="+_href.split("/")[2]);
     }
 });
