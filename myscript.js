@@ -116,6 +116,9 @@ chrome.runtime.onMessage.addListener(
       $("#divFloat .T1").css("padding-top","20px");
       $("#divFloat .BotInfo").css("font-size","small!important");
       var _href=$("#divFloat .T1 a").attr("href");
-      $("#divFloat .T1 a").attr("href","https://www.google.com.hk/search?q="+_href.split("/")[2]);
+      if(_href){
+        $("#divFloat .T1 a").attr("href","https://www.google.com.hk/search?q="+_href.split("/")[2]);
+      }
+      
     }
 });

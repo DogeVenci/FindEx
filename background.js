@@ -31,7 +31,7 @@ function XHRSend(url,keyword){
 
 chrome.contextMenus.create({
   "type": "normal",
-  "title": "FindEx '%s'",
+  "title": "BTDigg '%s'",
   "contexts": ["selection"],
   "onclick": function(info, tab) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
