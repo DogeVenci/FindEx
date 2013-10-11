@@ -2,6 +2,7 @@ var loader=chrome.extension.getURL("images/ajax-loader.gif");
 var loadimg=$('<img src='+loader+'>');
 var a = $('<div id="divFloat" style="background-color:#E8E9E6;border:1px solid #ccc;margin-top: 10px;padding: 0.5% 0.6%;overflow:auto;display:none"></div>');
 $('body').append(a);
+
 var x;
 var y;
 
@@ -20,6 +21,34 @@ document.onmouseup = function(e) {
   
   // do what you want with x and y
 };
+
+$("p>span[style],div>span").mouseover(function(e){
+  window.postMessage({ type: "FROM_PAGE", text: $(e.target).text() }, "*");
+    x = e.clientX;
+    y = e.clientY;
+    var test=$(window).width();
+    if (x>($(window).width()-750)) {
+      x=$(window).width()-750;
+    }
+    if (y>($(window).height()-350)) {
+      y=$(window).height()-350;
+    }
+});
+window.addEventListener("message", function(event) {
+  // We only accept messages from ourselves
+  if (event.source != window)
+    return;
+
+  if (event.data.type && (event.data.type == "FROM_PAGE")) {
+    console.log("Content script received: " + event.data.text);
+    //port.postMessage(event.data.text);
+    chrome.runtime.sendMessage("", {greeting: event.data.text}, function(response) {
+                console.log("SendMsg response text OK!!!");
+
+    });
+    
+  }
+}, false);
 
 function getData() {
   $.ajax({
