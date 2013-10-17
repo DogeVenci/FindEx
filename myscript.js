@@ -21,7 +21,7 @@ document.onmouseup = function(e) {
   
   // do what you want with x and y
 };
-
+/*
 $("p>span[style],div>span").mouseover(function(e){
   window.postMessage({ type: "FROM_PAGE", text: $(e.target).text() }, "*");
     x = e.clientX;
@@ -49,7 +49,7 @@ window.addEventListener("message", function(event) {
     
   }
 }, false);
-
+*/
 function getData() {
   $.ajax({
     type: "get",
@@ -146,7 +146,7 @@ chrome.runtime.onMessage.addListener(
       $("#divFloat .BotInfo").css("font-size","small!important");
       var _href=$("#divFloat .T1 a").attr("href");
       if(_href){
-        $("#divFloat .T1 a").attr("href","https://www.google.com.hk/search?q="+_href.split("/")[2]);
+        $("#divFloat .T1 a").attr("href","http://www.xiazai.fm/hash/"+_href.split("/")[2]);
       }
       
     }
