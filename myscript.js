@@ -147,6 +147,7 @@ chrome.runtime.onMessage.addListener(
       var _href=$("#divFloat .T1 a").attr("href");
       if(_href){
         $("#divFloat .T1 a").attr("href","http://www.xiazai.fm/hash/"+_href.split("/")[2]);
+        $("#divFloat .T1 a").after('&nbsp<a href=magnet:?xt=urn:btih:'+_href.split("/")[2]+'>[磁力链接]</a>')
       }
       
     }
