@@ -144,11 +144,16 @@ chrome.runtime.onMessage.addListener(
       $("#divFloat li").css({"float":"left","width":"auto","list-style":"none","margin-right":"25px"});
       $("#divFloat .T1").css("padding-top","20px");
       $("#divFloat .BotInfo").css("font-size","small!important");
-      var _href=$("#divFloat .T1 a").attr("href");
-      if(_href){
-        $("#divFloat .T1 a").attr("href","http://www.xiazai.fm/hash/"+_href.split("/")[2]);
-        $("#divFloat .T1 a").after('&nbsp<a href=magnet:?xt=urn:btih:'+_href.split("/")[2]+'>[磁力链接]</a>')
-      }
+      $("#divFloat .T1 a").each(function(){
+        var _href=$(this).attr("href");
+        if(_href){
+          _hash=_href.split("/")[2];
+          $(this).attr("href","http://www.xiazai.fm/hash/"+_hash);
+          $(this).after('&nbsp<a href=magnet:?xt=urn:btih:'+_hash+'>[磁力链接]</a>');
+          $(this).after('&nbsp<a target="_blank" href="http://vod.xunlei.com/share.html?from=kuaichuan_web&url=magnet%3a%3fxt%3durn%3abtih%3a'+_hash+'" rel="noreferrer">[迅雷云播]</a>');
+        }
+      });
+      
       
     }
 });
