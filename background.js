@@ -14,16 +14,16 @@ function XHRSend(url,keyword){
       if (xhr.readyState == 4) {
         // JSON解析器不会执行攻击者设计的脚本.
           var t=xhr.responseText;
-          //$(t).find("#search_res tbody").each(function(){
+          $(t).find("#search_res tbody").each(function(){
             //var text=$(this).html();
-            //var text=$(t).find("#search_res>table>tbody").html();
-            var text=$(t).find("#minWMaxW>div.Main>div.Right>div.Result>ul.WebList").html()
+            var text=$(t).find("#search_res>table>tbody").html();
+            //var text=$(t).find("#minWMaxW>div.Main>div.Right>div.Result>ul.WebList").html()
             //chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
               chrome.tabs.sendMessage(lastTab, {greeting: text}, function(response) {
                 console.log("SendMsg response text OK!!!");
               });
             //});
-         // });
+          });
       }
     }
     xhr.send();
@@ -41,7 +41,7 @@ chrome.contextMenus.create({
       });
     });
 
-    XHRSend(XIAZAIFM,info.selectionText);
+    XHRSend(BTDIGG,info.selectionText);
     
   }
 }, function() {});
@@ -56,5 +56,5 @@ chrome.runtime.onMessage.addListener(
     });
     lastTab=sender.tab.id;
 
-    XHRSend(XIAZAIFM,request.greeting);
+    XHRSend(BTDIGG,request.greeting);
 });
